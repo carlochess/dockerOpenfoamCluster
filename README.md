@@ -5,13 +5,15 @@ OpenFOAM is a free, open source CFD software developed primarily by OpenCFD Ltd 
 Use (http://www.openfoam.com/download/install-binary.php) or you can play with:
 
 ```
-$ user="$(id -u)"
-$ home="${1:-$HOME}"
+username="$USER"
+user="$(id -u)"
+home="${1:-$HOME}"
+displayVar="$DISPLAY"
 
 $ docker run  -it -d --name ofoam \
     --user=${user} \
-    -e USER=${USER} -e QT_X11_NO_MITSHM=1 \
-    -e DISPLAY=${DISPLAY} --workdir="${home}" \
+    -e USER=${username} -e QT_X11_NO_MITSHM=1 \
+    -e DISPLAY=${displayVar} --workdir="${home}" \
     --volume="${home}:${home}" \
     --volume="/etc/group:/etc/group:ro" \
     --volume="/etc/passwd:/etc/passwd:ro" \
@@ -33,6 +35,7 @@ $ docker attach ofoam
 ## Test
 
 ```
+FOAM_RUN=/home/$USER/OpenFOAM/$USER-v3.0+/run
 $ mkdir -p $FOAM_RUN
 $ run
 $ cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity .
@@ -106,3 +109,6 @@ $ mpirun --host openfoam_mpi_head_1 openfoam_mpi_head_2 -np 4 interFoam
 # Docker compose + Docker Swarm
 - You need a docker swarm cluster, use a discovery backend (consul), a docker registry,
 - Maybe you need distribuited file system like nfs.
+
+# Caveats
+- mpiuser
