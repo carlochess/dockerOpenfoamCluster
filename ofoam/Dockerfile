@@ -8,7 +8,7 @@ MAINTAINER Carlos Roman <carlochess@gmail.com>
 # Instale SSH Server y Client
 # ------------------------------------------------------------
 RUN touch /var/lib/rpm/*
-RUN yum -y install openssh-server openssh-clients sudo
+RUN yum -y install openssh-server openssh-clients sudo && yum clean all
 RUN mkdir /var/run/sshd
 RUN echo 'root:mpirun' | chpasswd
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
