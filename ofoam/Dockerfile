@@ -7,7 +7,7 @@ MAINTAINER Carlos Roman <carlochess@gmail.com>
 # ------------------------------------------------------------
 # Instale SSH Server y Client
 # ------------------------------------------------------------
-
+RUN touch /var/lib/rpm/*
 RUN yum -y install openssh-server openssh-clients sudo
 RUN mkdir /var/run/sshd
 RUN echo 'root:mpirun' | chpasswd
