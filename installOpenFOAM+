@@ -1,0 +1,34 @@
+#!/bin/sh
+# this script will
+#   i) Pull OpenFOAM+ from docker hub if it does not exist in local environment 
+#  ii) create two containers with name of_v3.0_plus  
+# iii) create a directory OpenFOAMdocker+ in home area and mount this folder to container. 
+#  Note: Docker daemon should be running before launching script 
+# This script has been tested upto 1.12 docker version 
+
+username="$USER"
+user="$(id -u)"
+home="${1:-$HOME}"
+
+imageName="openfoamplus/of_v30plus_rhel66"
+containerName="of_v3.0_plus"
+displayVar="$DISPLAY"
+# find what images are running:
+echo "Following Docker containers are present on your system:"
+echo "**************************************** "
+docker ps -a 
+
+
+#creating docker container for OpenFOAM+ operation   
+echo "**************************************** "
+echo "			"
+echo "Creating Docker OpenFOAM+ container ${containerName}"
+
+docker run  -it -d --name ${containerName} --user=${user} -e USER=${username} -e QT_X11_NO_MITSHM=1 -e DISPLAY=${displayVar} --workdir="${home}" --volume="${home}:${home}"  --volume="/etc/group:/etc/group:ro"  --volume="/etc/passwd:/etc/passwd:ro"  --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/sudoers.d:/etc/sudoers.d:ro" -v=/tmp/.X11-unix:/tmp/.X11-unix  ${imageName}  /bin/bash --rcfile /opt/OpenFOAM/OpenFOAM-v3.0+/etc/bashrc 
+#docker run  -it -d --name ${containerName} --user=${user} -e USER=${user} -e QT_X11_NO_MITSHM=1 -e DISPLAY=${displayVar} --workdir="/home/${user}" --volume="${home}:/home/${user}"  --volume="/etc/group:/etc/group:ro"  --volume="/etc/passwd:/etc/passwd:ro"  --volume="/etc/shadow:/etc/shadow:ro"  --volume="/etc/sudoers.d:/etc/sudoers.d:ro" -v=/tmp/.X11-unix:/tmp/.X11-unix  ${imageName}  /bin/bash --rcfile /opt/OpenFOAM/OpenFOAM-v3.0+/etc/bashrc 
+
+echo "Container ${containerName} was created."
+
+echo "**************************************************"
+echo "Run the startOpenFOAM+ script to launch container"
+echo "**************************************************"

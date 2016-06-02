@@ -1,0 +1,10 @@
+#!/bin/bash
+# this script will
+#   i) Start  OpenFOAM+ paraFoam container 
+#  in the  the shell-terminal. 
+#  User need to type paraFoam or paraview from shell of container 
+#  User also need to run xhost+ from other terminal
+#  Note: Docker daemon should be running before launching script 
+xhost +local:of_v3.0_plus
+docker start  of_v3.0_plus
+docker attach of_v3.0_plus

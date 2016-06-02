@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  mpi_head:
+    image: carlochess/of_v30plus_rhel66
+    command: "/bin/bash --rcfile /opt/OpenFOAM/OpenFOAM-v3.0+/etc/bashrc"
+    user: "mpirun"
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    environment:
+        - USER="mpirun"
+        - QT_X11_NO_MITSHM=1
+        - DISPLAY=:0
+#        - affinity:container!=*mpi_head*
+    volumes:
+        - .:/app
+        
+#networks:
+#  default:
+#    external:
+#      name: uchuva-net
