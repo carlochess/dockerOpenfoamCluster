@@ -2,7 +2,7 @@
 OpenFOAM is a free, open source CFD software developed primarily by OpenCFD Ltd since 2004, distributed by OpenCFD Ltd and the OpenFOAM Foundation. It has a large user base across most areas of engineering and science, from both commercial and academic organisations. OpenFOAM has an extensive range of features to solve anything from complex fluid flows involving chemical reactions, turbulence and heat transfer, to acoustics, solid mechanics and electromagnetics.
 
 # Single Instance
-http://www.openfoam.com/download/install-binary.php
+Use (http://www.openfoam.com/download/install-binary.php) or you can play with:
 
 ```
 $ user="$(id -u)"
@@ -18,16 +18,16 @@ $ docker run  -it -d --name ofoam \
     --volume="/etc/shadow:/etc/shadow:ro" \
     --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
     -v=/tmp/.X11-unix:/tmp/.X11-unix \
-    carlochess/dockerOpenfoamCluster \
+    carlochess/of_v30plus_rhel66 \
     /bin/bash --rcfile /opt/OpenFOAM/OpenFOAM-v3.0+/etc/bashrc 
 ```
 
 You can attach whenever you want using 
 
 ```
-$ xhost +local:of_v3.0_plus
-$ docker start  of_v3.0_plus #
-$ docker attach of_v3.0_plus
+$ xhost +local:ofoam
+$ docker start  ofoam
+$ docker attach ofoam
 ```
 
 ## Test
